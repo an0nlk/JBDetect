@@ -9,7 +9,7 @@ import Foundation
 class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        var isJBDetected = chkJB()
+        let isJBDetected = chkJB()
         if isJBDetected {
             //Jailbreak is Detected
             
