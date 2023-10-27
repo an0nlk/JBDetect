@@ -6,3 +6,4 @@ Repo: https://github.com/an0nlk/JBDetect
 JailBreak Detection for iOS Applications
 
 Add relevent functions in JBDetect/ViewController.swift to your Xcode project.
+<br> If JailBreak is detected these functions will return "JBroken".
