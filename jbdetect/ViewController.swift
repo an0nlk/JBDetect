@@ -19,15 +19,79 @@ class ViewController: UIViewController {
     }
 
     func chkJB() -> Bool {
-        return sim()  == "JBroken" || jbPath() == "JBroken" || slPath() == "JBroken" || dyLibName() == "JBroken" || checkPkgManager() == "JBroken"
+
+        //Create labels to display detections
+        let appName = createLabel(withText: "JB Detect By Kalana (Anon LK)", frame: CGRect(x: 20, y: 50, width: 280, height: 60))
+        
+        let JBLabel = createLabel(withText: "JailBreak Detection: ", frame: CGRect(x: 20, y: 100, width: 280, height: 60))
+        
+        let JBDetectMethdLabel = createLabel(withText: "Detection Methods: N/A", frame: CGRect(x: 20, y: 150, width: 280, height: 60))
+
+        //Display messages if the JB is detected with detection methods
+        if sim()  == "JBroken" || jbPath() == "JBroken" || slPath() == "JBroken" || dyLibName() == "JBroken" || checkPkgManager() == "JBroken" {
+            JBLabel.text = "JailBreak Detection: True"
+            JBDetectMethdLabel.text = "Detection Methods: "
+            
+            if sim() == "JBroken" {
+                //Simulator detected
+                JBDetectMethdLabel.text! += "\n  Simulator"
+            }
+            
+            if jbPath() == "JBroken" {
+                //jailbreak-related files, directories, and binaries are detected 
+                JBDetectMethdLabel.text! += "\n  JB Related Paths"
+            }
+            
+            if slPath() == "JBroken" {
+                //jailbreak-related symbolic links are detected
+                JBDetectMethdLabel.text! += "\n  JB Symbolic Links"
+            }
+            
+            if dyLibName() == "JBroken" {
+                //jailbreak-related dynamic links are detected
+                JBDetectMethdLabel.text! += "\n  JB Dynamic Libraries"
+            }
+            
+            if checkPkgManager() == "JBroken" {
+                //jailbreak-related package managers are detected
+                JBDetectMethdLabel.text! += "\n  JB Package Managers"
+            }
+            appName.sizeToFit()
+            JBLabel.sizeToFit()
+            JBDetectMethdLabel.sizeToFit()
+            
+            return true
+            
+        } else {
+            JBLabel.text = "JailBreak Detection: False"
+            
+            appName.sizeToFit()
+            JBLabel.sizeToFit()
+            JBDetectMethdLabel.sizeToFit()
+            
+            return false
+        }
     }
+
+    // Create label to display detection
+    func createLabel(withText text: String, frame: CGRect) -> UILabel {
+        let label = UILabel()
+        label.frame = frame
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.text = text
+        label.adjustsFontSizeToFitWidth = true
+        view.addSubview(label)
+        return label
+    }
+
 
     //check for simulator
     func sim() -> String {
         #if targetEnvironment(simulator)
-            return "JBroken"
+        return "JBroken"
         #else
-            return "notJBroken"
+        return "notJBroken"
         #endif
     }
 
