@@ -9,62 +9,18 @@ import Foundation
 class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        chkJB()
-    }
-
-    func chkJB() {
-        let appName = createLabel(withText: "JB Detect By Kalana (Anon LK)", frame: CGRect(x: 20, y: 50, width: 280, height: 60))
-        
-        let JBLabel = createLabel(withText: "JailBreak Detection: ", frame: CGRect(x: 20, y: 100, width: 280, height: 60))
-        
-        let JBDetectMethdLabel = createLabel(withText: "Detection Methods: N/A", frame: CGRect(x: 20, y: 150, width: 280, height: 60))
-        
-        if sim()  == "JBroken" || jbPath() == "JBroken" || slPath() == "JBroken" || dyLibName() == "JBroken" || checkPkgManager() == "JBroken" {
-            JBLabel.text = "JailBreak Detection: True"
-            JBDetectMethdLabel.text = "Detection Methods: "
-            
-            if sim() == "JBroken" {
-                JBDetectMethdLabel.text! += "\n  Simulator"
-            }
-            
-            if jbPath() == "JBroken" {
-                JBDetectMethdLabel.text! += "\n  JB Related Paths"
-            }
-            
-            if slPath() == "JBroken" {
-                JBDetectMethdLabel.text! += "\n  JB Symbolic Links"
-            }
-            
-            if dyLibName() == "JBroken" {
-                JBDetectMethdLabel.text! += "\n  JB Dynamic Libraries"
-            }
-            
-            if checkPkgManager() == "JBroken" {
-                JBDetectMethdLabel.text! += "\n  JB Package Managers"
-            }
+        var isJBDetected = chkJB()
+        if isJBDetected {
+            //Jailbreak is Detected
             
         } else {
-            JBLabel.text = "JailBreak Detection: False"
+            //Jailbreak is not detected
         }
-        
-        // Call sizeToFit() after configuring the labels
-        appName.sizeToFit()
-        JBLabel.sizeToFit()
-        JBDetectMethdLabel.sizeToFit()
     }
 
-    // Create label
-    func createLabel(withText text: String, frame: CGRect) -> UILabel {
-        let label = UILabel()
-        label.frame = frame
-        label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
-        label.text = text
-        label.adjustsFontSizeToFitWidth = true
-        view.addSubview(label)
-        return label
+    func chkJB() -> Bool {
+        return sim()  == "JBroken" || jbPath() == "JBroken" || slPath() == "JBroken" || dyLibName() == "JBroken" || checkPkgManager() == "JBroken"
     }
-
 
     //check for simulator
     func sim() -> String {
